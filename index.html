@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Quiz</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Test Your F1 Knowledge</h1>
+        <div><a href="#">View Leaderboard</a></div>
+        <div id="timer"></div>
+        
+    </header>
+    <main id="main">
+        <div id="timer"></div>
+        <button id="startQuiz">IT'S LIGHTS OUT AND AWAY WE GO!!!</button>
+        <div id="quiz" style="display: none;">
+            <p id="question"></p>
+            <ul id="choices">
+                <li><button  class="choice" id="A"></button></li>
+                <li><button  class="choice" id="B"></button></li>
+                <li><button  class="choice" id="C"></button></li>
+                <li><button  class="choice" id="D"></button></li>
+            </ul>
+            <button id="previous">Previous</button>
+            <button id="next">Next</button>
+            <button id="submit">Submit</button>
+        </div>
+        <div id="results" style="display: none;">
+        <h3>Here are your results</h3>
+        <img src="https://images.unsplash.com/photo-1590007530236-b51ff30f5d3b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Checkered flag">
+        
+        
+        </div>
+
+
+    </main>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
