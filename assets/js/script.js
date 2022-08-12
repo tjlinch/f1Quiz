@@ -21,10 +21,10 @@ var score = 0;
 
 // Variable Declarations for questions
 var question1 = {ask:"Who won their first Drivers Championship in 2021?", optionA: "Lewis Hamilton", OptionB:"Lando Norris", OptionC:"Max Verstappen", OptionD:"Mick Schumacher"};
-var question2 = {ask:"How many Drivers Championships has Lewis Hamilton won?", optionA: "4", OptionB:"7", OptionC:"8", OptionD:"10", correct:"B"};
-var question3 = {ask:"The term 'Grand Prix' was first used for a motor race in which country?", optionA: "USA", OptionB:"Germany", OptionC:"UK", OptionD:"France", correct:"D"};
-var question4 = {ask:"Which constructor has won the most races in F1?", optionA: "McLaren", OptionB:"Ferrari", OptionC:"Mercedes", OptionD:"Red Bull", correct:"B"};
-var question5 = {ask:"Which driver has won the most races in F1?", optionA: "Ayrton Senna", OptionB:"Michael Schumacher", OptionC:"Sebastian Vettel", OptionD:"Lewis Hamilton", correct:"D"};
+var question2 = {ask:"How many Drivers Championships has Lewis Hamilton won?", optionA: "4", OptionB:"7", OptionC:"8", OptionD:"10"};
+var question3 = {ask:"The term 'Grand Prix' was first used for a motor race in which country?", optionA: "USA", OptionB:"Germany", OptionC:"UK", OptionD:"France"};
+var question4 = {ask:"Which constructor has won the most races in F1?", optionA: "McLaren", OptionB:"Ferrari", OptionC:"Mercedes", OptionD:"Red Bull"};
+var question5 = {ask:"Which driver has won the most races in F1?", optionA: "Ayrton Senna", OptionB:"Michael Schumacher", OptionC:"Sebastian Vettel", OptionD:"Lewis Hamilton"};
 
 
 var questionsArray = [question1, question2, question3, question4, question5];
@@ -35,7 +35,7 @@ function setTimer() {
         secondsLeft--;
         timerEl.textContent = secondsLeft + " seconds remaining until the checkered flag."
 
-        if(secondsLeft === 0){
+        if(secondsLeft <= 0){
             clearInterval(timerInterval);
             //set quiz back to hidden
             // display results
@@ -68,29 +68,78 @@ startQuizEl.addEventListener("click", function() {
 //grabbing the user's selection
 answerAEl.addEventListener("click", function() {
     userAnswer = "A";
-    checkCorrect1();
+    checkCorrect();
+    console.log(score);
 })
 answerBEl.addEventListener("click", function() {
     userAnswer = "B";
-    checkCorrect1();
+    checkCorrect();
+    console.log(score);
+
 })
 answerCEl.addEventListener("click", function() {
     userAnswer = "C";
-    checkCorrect1();
+    checkCorrect();
+    console.log(score);
+
 })
 answerDEl.addEventListener("click", function() {
     userAnswer = "D";
-    checkCorrect1();
+    checkCorrect();
+    console.log(score);
+
 })
 
 
 
 //logic to test if the question was answered correctly
-function checkCorrect1() {
+function checkCorrect() {
     if (i === 0 && userAnswer === "C") {
-        checkAnswerEl.textContent = "Correct!"
+        console.log("correct")
+        score++;
+        i++;
+        showQuestion(i);
     } else if ((i === 0) && (userAnswer === "A" || userAnswer === "B" || userAnswer === "D" )){
         console.log("wrong")
+        secondsLeft--, secondsLeft--,secondsLeft--, secondsLeft--, secondsLeft--;
+        i++;
+        showQuestion(i);
+    } else if (i === 1 && userAnswer === "B") {
+        console.log("correct")
+        score++;
+        i++;
+        showQuestion(i);
+    } else if ((i === 1) && (userAnswer === "A" || userAnswer === "C" || userAnswer === "D")) {
+        console.log("wrong")
+        secondsLeft--, secondsLeft--,secondsLeft--, secondsLeft--, secondsLeft--;
+        i++;
+        showQuestion(i);
+    } else if (i === 2 && userAnswer === "D") {
+        console.log("correct")
+        score++;
+        i++;
+        showQuestion(i);
+    } else if ((i === 2) && (userAnswer === "A" || userAnswer === "B" || userAnswer === "C")) {
+        console.log("wrong")
+        secondsLeft--, secondsLeft--,secondsLeft--, secondsLeft--, secondsLeft--;
+        i++;
+        showQuestion(i);
+    } else if (i === 3 && userAnswer === "B") {
+        console.log("correct")
+        score++;
+        i++;
+        showQuestion(i);
+    } else if ((i === 3) && (userAnswer === "A" || userAnswer === "C" || userAnswer === "D")) {
+        console.log("wrong")
+        secondsLeft--, secondsLeft--,secondsLeft--, secondsLeft--, secondsLeft--;
+        i++;
+        showQuestion(i);
+    } else if (i === 4 && userAnswer === "D") {
+        console.log("correct")
+        score++;
+    } else if ((i === 4) && (userAnswer === "A" || userAnswer === "B" || userAnswer === "C")) {
+        console.log("wrong")
+        secondsLeft--, secondsLeft--,secondsLeft--, secondsLeft--, secondsLeft--;
     }
 }
 
@@ -113,6 +162,9 @@ nextEl.addEventListener("click", function() {
     return i;
     } 
 });
+// submitEl.addEventListener("click", function() {
+//     console.log(i);
+// })
 
 
 // if (i === 4) {
