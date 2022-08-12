@@ -8,15 +8,20 @@ var answerAEl = document.getElementById("A");
 var answerBEl = document.getElementById("B");
 var answerCEl = document.getElementById("C");
 var answerDEl = document.getElementById("D");
-var checkAnswerEl = document.getElementById("checkAnser");
+var checkAnswerEl = document.getElementById("checkAnswer");
 var previousEl = document.getElementById("previous");
 var nextEl = document.getElementById("next");
 var submitEl = document.getElementById("submit");
 var resultsEl = document.getElementById("results");
+var initialsInput = document.getElementById("initialsInput");
+var submitInitialsEl = document.getElementById("submitInitials");
 var secondsLeft = 30;
+var checkSeconds = 30;
+var scoreEl = document.getElementById("userScore");
 i = 0;
 var userAnswer = '';
 var score = 0;
+var scoresArray =[]
 
 
 // Variable Declarations for questions
@@ -32,22 +37,51 @@ var questionsArray = [question1, question2, question3, question4, question5];
 //function to run a timer on the web API
 function setTimer() {
     var timerInterval = setInterval(function() {
+        timerEl.textContent = secondsLeft + " seconds remaining until the checkered flag.";
         secondsLeft--;
-        timerEl.textContent = secondsLeft + " seconds remaining until the checkered flag."
 
-        if(secondsLeft <= 0){
+        if (secondsLeft <= 0){
             clearInterval(timerInterval);
             //set quiz back to hidden
             // display results
             quizEl.setAttribute("style", "display: none;");
             timerEl.setAttribute("style", "display: none;");
             resultsEl.setAttribute("style", "display: normal;");
+            scoreEl.textContent = "You scored " + score + " out of 5 points!";
         }
 
     }, 1000)
 }
 
-//function to append each question from the questionsArray
+// timers for displaying a ✅ or ❌ upon answering a question
+function checkTimerCorrect() {
+    var timerInterval = setInterval(function() {
+        checkSeconds--;
+        checkAnswerEl.textContent = "✅";
+        if (checkSeconds === 0) {
+            clearInterval(timerInterval);
+            checkAnswerEl.textContent = "";
+            showQuestion(i);
+            checkSeconds = 30;
+        }
+
+    }, 50)
+}
+function checkTimerIncorrect() {
+    var timerInterval = setInterval(function() {
+        checkSeconds--;
+        checkAnswerEl.textContent = "❌";
+        if (checkSeconds === 0) {
+            clearInterval(timerInterval);
+            checkAnswerEl.textContent = "";
+            showQuestion(i);
+            checkSeconds = 30;
+        }
+
+    }, 50)
+}
+
+//function to display each question from the questionsArray
 function showQuestion(i) {
     questionEl.textContent = questionsArray[i].ask;
     answerAEl.textContent = questionsArray[i].optionA;
@@ -69,25 +103,18 @@ startQuizEl.addEventListener("click", function() {
 answerAEl.addEventListener("click", function() {
     userAnswer = "A";
     checkCorrect();
-    console.log(score);
 })
 answerBEl.addEventListener("click", function() {
     userAnswer = "B";
     checkCorrect();
-    console.log(score);
-
 })
 answerCEl.addEventListener("click", function() {
     userAnswer = "C";
     checkCorrect();
-    console.log(score);
-
 })
 answerDEl.addEventListener("click", function() {
     userAnswer = "D";
     checkCorrect();
-    console.log(score);
-
 })
 
 
@@ -98,48 +125,53 @@ function checkCorrect() {
         console.log("correct")
         score++;
         i++;
-        showQuestion(i);
+        checkTimerCorrect();
+        // checkAnswerEl.textContent = "You answered the last question correctly!";
     } else if ((i === 0) && (userAnswer === "A" || userAnswer === "B" || userAnswer === "D" )){
         console.log("wrong")
         secondsLeft--, secondsLeft--,secondsLeft--, secondsLeft--, secondsLeft--;
         i++;
-        showQuestion(i);
+        checkTimerIncorrect();
     } else if (i === 1 && userAnswer === "B") {
         console.log("correct")
         score++;
         i++;
-        showQuestion(i);
+        checkTimerCorrect();
     } else if ((i === 1) && (userAnswer === "A" || userAnswer === "C" || userAnswer === "D")) {
         console.log("wrong")
         secondsLeft--, secondsLeft--,secondsLeft--, secondsLeft--, secondsLeft--;
         i++;
-        showQuestion(i);
+        checkTimerIncorrect();
     } else if (i === 2 && userAnswer === "D") {
         console.log("correct")
         score++;
         i++;
-        showQuestion(i);
+        checkTimerCorrect();
     } else if ((i === 2) && (userAnswer === "A" || userAnswer === "B" || userAnswer === "C")) {
         console.log("wrong")
         secondsLeft--, secondsLeft--,secondsLeft--, secondsLeft--, secondsLeft--;
         i++;
-        showQuestion(i);
+        checkTimerIncorrect();
     } else if (i === 3 && userAnswer === "B") {
         console.log("correct")
         score++;
         i++;
-        showQuestion(i);
+        checkTimerCorrect();
     } else if ((i === 3) && (userAnswer === "A" || userAnswer === "C" || userAnswer === "D")) {
         console.log("wrong")
         secondsLeft--, secondsLeft--,secondsLeft--, secondsLeft--, secondsLeft--;
         i++;
-        showQuestion(i);
+        checkTimerIncorrect();
     } else if (i === 4 && userAnswer === "D") {
         console.log("correct")
         score++;
+        submitEl.setAttribute("style", "display: normal;");
+        checkAnswerEl.textContent = "✅";
     } else if ((i === 4) && (userAnswer === "A" || userAnswer === "B" || userAnswer === "C")) {
         console.log("wrong")
         secondsLeft--, secondsLeft--,secondsLeft--, secondsLeft--, secondsLeft--;
+        submitEl.setAttribute("style", "display: normal;");
+        checkAnswerEl.textContent = "❌";
     }
 }
 
@@ -162,14 +194,29 @@ nextEl.addEventListener("click", function() {
     return i;
     } 
 });
-// submitEl.addEventListener("click", function() {
-//     console.log(i);
-// })
 
+//closes down the quiz and displays results
+submitEl.addEventListener("click", function() {
+    quizEl.setAttribute("style", "display: none;");
+    timerEl.setAttribute("style", "display: none;");
+    resultsEl.setAttribute("style", "display: normal;");
+    scoreEl.textContent = "You scored " + score + " out of 5 points!";
+});
 
-// if (i === 4) {
-//     submitEL.setAttribute("style", "display: none;");
-// }
+//submits initials and score to the leaderboard in 
+submitInitialsEl.addEventListener("click", function() {
+    userInitials = initialsInput.value;
+    var user = {
+        name: userInitials,
+        score: score
+    }
+    scoresArray.push(user);
+    
+
+    
+
+});
+
 
 
 
