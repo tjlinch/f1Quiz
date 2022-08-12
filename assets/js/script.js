@@ -15,6 +15,7 @@ var submitEl = document.getElementById("submit");
 var resultsEl = document.getElementById("results");
 var initialsInput = document.getElementById("initialsInput");
 var submitInitialsEl = document.getElementById("submitInitials");
+var leaderboardEl = document.getElementById("leaderboard");
 var secondsLeft = 30;
 var checkSeconds = 30;
 var scoreEl = document.getElementById("userScore");
@@ -122,53 +123,43 @@ answerDEl.addEventListener("click", function() {
 //logic to test if the question was answered correctly
 function checkCorrect() {
     if (i === 0 && userAnswer === "C") {
-        console.log("correct")
         score++;
         i++;
         checkTimerCorrect();
         // checkAnswerEl.textContent = "You answered the last question correctly!";
     } else if ((i === 0) && (userAnswer === "A" || userAnswer === "B" || userAnswer === "D" )){
-        console.log("wrong")
         secondsLeft--, secondsLeft--,secondsLeft--, secondsLeft--, secondsLeft--;
         i++;
         checkTimerIncorrect();
     } else if (i === 1 && userAnswer === "B") {
-        console.log("correct")
         score++;
         i++;
         checkTimerCorrect();
     } else if ((i === 1) && (userAnswer === "A" || userAnswer === "C" || userAnswer === "D")) {
-        console.log("wrong")
         secondsLeft--, secondsLeft--,secondsLeft--, secondsLeft--, secondsLeft--;
         i++;
         checkTimerIncorrect();
     } else if (i === 2 && userAnswer === "D") {
-        console.log("correct")
         score++;
         i++;
         checkTimerCorrect();
     } else if ((i === 2) && (userAnswer === "A" || userAnswer === "B" || userAnswer === "C")) {
-        console.log("wrong")
         secondsLeft--, secondsLeft--,secondsLeft--, secondsLeft--, secondsLeft--;
         i++;
         checkTimerIncorrect();
     } else if (i === 3 && userAnswer === "B") {
-        console.log("correct")
         score++;
         i++;
         checkTimerCorrect();
     } else if ((i === 3) && (userAnswer === "A" || userAnswer === "C" || userAnswer === "D")) {
-        console.log("wrong")
         secondsLeft--, secondsLeft--,secondsLeft--, secondsLeft--, secondsLeft--;
         i++;
         checkTimerIncorrect();
     } else if (i === 4 && userAnswer === "D") {
-        console.log("correct")
         score++;
         submitEl.setAttribute("style", "display: normal;");
         checkAnswerEl.textContent = "✅";
     } else if ((i === 4) && (userAnswer === "A" || userAnswer === "B" || userAnswer === "C")) {
-        console.log("wrong")
         secondsLeft--, secondsLeft--,secondsLeft--, secondsLeft--, secondsLeft--;
         submitEl.setAttribute("style", "display: normal;");
         checkAnswerEl.textContent = "❌";
@@ -208,15 +199,15 @@ submitInitialsEl.addEventListener("click", function() {
     userInitials = initialsInput.value;
     var user = {
         name: userInitials,
-        score: score
+        userScore: score
     }
     scoresArray.push(user);
-    localStorage.setItem("Scores", JSON.stringify(scoresArray));
-    
+    console.log(scoresArray)
+    localStorage.setItem("Users", JSON.stringify(user));
 
-    
-
-});
+    resultsEl.setAttribute("style", "display: none;");
+    leaderboardEl.setAttribute("style", "display: normal;");
+})
 
 
 
