@@ -59,6 +59,14 @@ header a {
     width: 600px;
 }
 
+#submitInitials {
+    background-color: rgb(190, 0, 0);
+    width: 140px;
+    height: 40px;
+    border-radius: 40px;
+    margin-bottom: 20px;
+}
+
 #leaderboard {
     color: white;
 }
