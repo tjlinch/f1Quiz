@@ -211,6 +211,7 @@ submitInitialsEl.addEventListener("click", function() {
         score: score
     }
     scoresArray.push(user);
+    localStorage.setItem("Scores", JSON.stringify(scoresArray));
     
 
     
